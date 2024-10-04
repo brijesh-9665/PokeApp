@@ -1,0 +1,139 @@
+﻿@model List<PokeApp.Models.Pokemon>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background-color: #f0f8ff; /* Light blue background */
+        font-family: 'Press Start 2P', cursive; /* Pokémon-inspired font */
+    }
+
+    .container {
+        padding: 20px; /* Add some padding around the container */
+    }
+
+    h1 {
+        color: #d63939; /* Pokémon red */
+        text-shadow: 1px 1px 2px #000; /* Shadow effect for the title */
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        background-color: #fff; /* White background for cards */
+        padding: 20px;
+        margin-bottom: 20px; /* Add some spacing between cards */
+    }
+
+    .individual-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        /* Slight color shift on hover */
+    }
+
+    .card-title {
+        font-size: 20px; /* Adjust font size for title */
+        font-weight: bold;
+        color: white; /* Bootstrap primary color */
+    }
+
+    .list-group-item {
+        background-color: #f1f1f1;
+        border: none;
+        font-size: 14px; /* Adjust font size for abilities */
+    }
+
+    h6 {
+        font-weight: 600;
+        color: #6c757d;
+    }
+
+    /* Optional: CSS classes for type-based background colors  */
+    .fire-type {
+        background-color: #f0a500;
+    }
+
+    .water-type {
+        background-color: #4169e1;
+    }
+
+    .grass-type {
+        background-color: #7CFC00;
+    }
+
+    .electric-type {
+        background-color: #FFFF00;
+    }
+
+    .normal-type {
+        background-color: #B8B8B8;
+    }
+
+    .bug-type{
+        background-color : lightgreen;
+    }
+
+    .poison-type{
+        background-color : mediumpurple;
+    }
+
+    .ground-type{
+        background-color : saddlebrown ; 
+    }
+
+    .fairy-type {
+        background-color: #FF69B4; /* Pink for fairy types */
+    }
+
+    .fighting-type{
+        background-color : red;
+    }
+
+    .psychic-type{
+        background-color : pink;
+    }
+
+    /* Add similar classes for other Pokémon types */
+
+    /* Optional: Grid layout for responsive card arrangement */
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+</style>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-primary">Pokédex</h1>
+
+    <div class="row card-grid">
+        @foreach (var pokemon in Model)
+        {
+            // Create a string of type classes
+            var typeClasses = string.Join(" ", pokemon.Types.Select(t => t.TypeName.ToLower() + "-type"));
+            var primaryType = pokemon.Types.FirstOrDefault()?.TypeName.ToLower() + "-type";
+
+            <div class="individual-card shadow-sm border-light @primaryType">
+                <ul class="list-group">
+                    @foreach (var type in pokemon.Types)
+                    {
+                        <li class="list-group-item">@type.TypeName</li>
+                    }
+                </ul>
+                <img src="@pokemon.SpriteUrl" class="card-img-top" alt="@pokemon.Name" style="object-fit: contain; height: 200px;" />
+                <div class="card-body">
+                    <h5 class="card-title text-center">@pokemon.Name (ID: @pokemon.Id)</h5>
+                    <h6 class="text-muted text-center">Abilities:</h6>
+                    <ul class="list-group">
+                        @foreach (var ability in pokemon.Abilities)
+                        {
+                            <li class="list-group-item">@ability.Name</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</div>

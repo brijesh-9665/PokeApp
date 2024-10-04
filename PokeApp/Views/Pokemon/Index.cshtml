@@ -1,0 +1,112 @@
+﻿@model Pokemon
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Abilities Viewer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff; /* Light blue background */
+            font-family: 'Arial', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive; /* Pokémon-inspired font */
+            color: #ff4757; /* Pokémon red */
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pokemon-card {
+            border: none; /* Remove border from the card */
+            border-radius: 15px; /* Rounded corners for the card */
+            background-color: #ffffff; /* White background for the card */
+            padding: 20px; /* Padding inside the card */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for the card */
+            margin: 20px auto; /* Center the card */
+            max-width: 400px; /* Limit the width */
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0; /* Margin around the form */
+        }
+
+            .search-form input {
+                width: 70%; /* Make input take up 70% width */
+                margin-right: 10px; /* Spacing between input and button */
+                padding: 10px; /* Padding for input */
+                border-radius: 5px; /* Rounded corners for input */
+                border: 1px solid #007bff; /* Bootstrap primary color */
+            }
+
+            .search-form button {
+                padding: 10px 15px; /* Padding for button */
+                border-radius: 5px; /* Rounded corners for button */
+                background-color: #007bff; /* Bootstrap primary color */
+                color: white; /* Text color */
+                border: none; /* Remove border */
+            }
+
+                .search-form button:hover {
+                    background-color: #0056b3; /* Darker blue on hover */
+                }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 1.5rem; /* Font size for the title */
+            text-align: center; /* Center align title */
+        }
+
+        .abilities-list {
+            list-style: none; /* Remove bullet points */
+            padding-left: 0; /* Remove padding */
+        }
+
+        .ability-item {
+            background-color: #f1f1f1; /* Light background for ability items */
+            margin: 5px 0; /* Margin between items */
+            padding: 10px; /* Padding inside items */
+            border-radius: 5px; /* Rounded corners for items */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pokémon Abilities Viewer</h1>
+
+    <div class="search-form">
+        <form method="post" asp-controller="Pokemon" asp-action="Search" class="w-100">
+            <input type="text" name="pokemonName" placeholder="Enter Pokémon Name" required />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    @if (Model != null)
+    {
+        <div class="pokemon-card">
+            <h2 class="card-title">@Model.Name (ID: @Model.Id)</h2>
+            <img src="@Model.SpriteUrl" alt="@Model.Name" class="img-fluid rounded mx-auto d-block" />
+            <h3 class="text-center">Abilities:</h3>
+            <ul class="abilities-list text-center">
+                @foreach (var ability in Model.Abilities)
+                {
+                    <li class="ability-item">@ability.Name</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Include Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
